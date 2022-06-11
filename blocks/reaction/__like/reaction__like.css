@@ -1,0 +1,16 @@
+.reaction__like {
+  display: block;
+  width: 22px;
+  height: 19px;
+  border: none;
+  background-image: url(../../../images/heartIcon.svg);
+  transition: opacity 0.5s;
+}
+
+.reaction:hover + .reaction__like {
+  opacity: 0.5;
+}
+
+.reaction:checked + .reaction__like {
+  background-image: url(../../../images/heartIcon_fill.svg);
+}
