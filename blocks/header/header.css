@@ -1,0 +1,18 @@
+.header {
+  margin: 0 auto;
+  max-width: 880px;
+  border-bottom: 1px solid #545454;
+}
+
+@media all and (max-width: 914px) {
+  .header {
+    max-width: 581px;
+  }
+}
+
+@media all and (max-width: 616px) {
+  .header {
+    max-width: 282px;
+  }
+}
+

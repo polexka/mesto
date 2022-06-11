@@ -1,0 +1,28 @@
+.input__submit-btn {
+  padding: 15px 125px;
+  max-width: 358px;
+  box-sizing: content-box;
+  color: white;
+  background-color: black;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 22px;
+  transition: opacity 0.5s;
+}
+
+.input__submit-btn:hover {
+  opacity: 0.5;
+}
+
+@media all and (max-width: 616px) {
+  .input__submit-btn {
+    padding: 14px 82px;
+    max-width: 238px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
