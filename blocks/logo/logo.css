@@ -4,6 +4,7 @@
   height: 33px;
   background-image: url(../../images/logo.svg);
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 @media all and (max-width: 914px) {

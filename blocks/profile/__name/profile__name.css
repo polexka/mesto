@@ -9,9 +9,16 @@
   overflow: hidden;
 }
 
+@media all and (max-width: 914px) {
+  .profile__name {
+    max-width: 389px;
+  }
+}
+
 @media all and (max-width: 616px) {
   .profile__name {
     margin-right: 10px;
+    max-width: 254px;
     font-size: 27px;
     line-height: 33px;
     text-align: center;

@@ -3,14 +3,14 @@
     width: 22px;
     height: 19px;
     border: none;
-    background-image: url(../../../images/heartIcon.svg);
+    background-image: url(../../images/heartIcon.svg);
     transition: opacity 0.5s;
-  }
+}
 
-  .reaction:hover + .like {
-    opacity: 0.5;
-  }
+.reaction:hover + .like {
+  opacity: 0.5;
+}
 
-  .reaction:checked + .like {
-    background-image: url(../../../images/heartIcon_fill.svg);
-  }
+.reaction:checked + .like {
+  background-image: url(../../images/heartIcon_fill.svg);
+}

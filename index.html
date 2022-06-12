@@ -12,12 +12,12 @@
 </head>
 <body class="page">
   <div class="popup">
-    <button class="popup__close-btn"></button>
+    <button class="popup__close-btn" type="button"></button>
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="input">
-        <input type="text" placeholder="Заголовок" class="input__text input__text_type_title">
-        <input type="text" placeholder="Описание" class="input__text input__text_type_caption">
+        <input type="text" name="name" placeholder="Заголовок" class="input__text input__text_type_title">
+        <input type="text" name="caption" placeholder="Описание" class="input__text input__text_type_caption">
         <button class="input__submit-btn" type="submit">
           Сохранить
         </button>
@@ -34,12 +34,12 @@
         <div class="profile__info">
           <div class="profile__info-wrap">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-btn"></button>
+            <button class="profile__edit-btn" type="button"></button>
           </div>
           <p class="profile__caption">Исследователь океана</p>
         </div>
       </div>
-      <button class="profile__add-btn"></button>
+      <button class="profile__add-btn" type="button"></button>
     </section>
     <section class="gallery">
       <ul class="cards">
@@ -53,62 +53,12 @@
             </label>
           </div>
         </li>
-        <li class="card">
-          <img class="card__image" src="./images/2.jpg" alt="Рыбы">
-          <div class="card__wrap">
-            <h2 class="card__title">Рыбы</h2>
-            <label>
-              <input class="reaction" type="checkbox">
-              <span class="like"></span>
-            </label>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/3.jpg" alt="Пожар">
-          <div class="card__wrap">
-            <h2 class="card__title">Пожар</h2>
-            <label>
-              <input class="reaction" type="checkbox">
-              <span class="like"></span>
-            </label>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/4.jpg" alt="Гортензия">
-          <div class="card__wrap">
-            <h2 class="card__title">Гортензия</h2>
-            <label>
-              <input class="reaction" type="checkbox">
-              <span class="like"></span>
-            </label>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/5.jpg" alt="Закат">
-          <div class="card__wrap">
-            <h2 class="card__title">Закат</h2>
-            <label>
-              <input class="reaction" type="checkbox">
-              <span class="like"></span>
-            </label>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/6.jpg" alt="Полет">
-          <div class="card__wrap">
-            <h2 class="card__title">Полет</h2>
-            <label>
-              <input class="reaction" type="checkbox">
-              <span class="like"></span>
-            </label>
-          </div>
-        </li>
       </ul>
     </section>
     <footer class="footer">
       <p class="copyright">© 2020 Mesto Russia</p>
     </footer>
   </main>
-  <script src="script.js"></script>
+  <script src="./script/script.js"></script>
 </body>
 </html>
