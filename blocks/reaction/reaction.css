@@ -1,7 +1,16 @@
 .reaction {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
+  padding: 0;
+  margin-right: 15px;
+  display: block;
+  width: 22px;
+  height: 19px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url(../../images/heartIcon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.reaction:hover {
+  opacity: 0.5;
 }

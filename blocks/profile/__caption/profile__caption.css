@@ -17,6 +17,7 @@
 
 @media all and (max-width: 616px) {
   .profile__caption {
+    margin-bottom: 0;
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;

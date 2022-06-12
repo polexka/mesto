@@ -5,7 +5,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
-  gap: 17px 20px;
+  gap: 20px 17px;
   list-style: none;
 }
 
@@ -17,6 +17,7 @@
 
 @media all and (max-width: 616px) {
   .cards {
+    margin: 0;
     grid-template-columns: 1fr;
   }
 }

@@ -1,7 +1,6 @@
 .card__wrap {
-  padding: 23px 18px 31px 21px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
 }
