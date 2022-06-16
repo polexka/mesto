@@ -1,7 +1,6 @@
 .popup__container {
-  margin: auto;
   padding: 35px;
-  max-width: 430px;
+  width: 430px;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -14,6 +13,6 @@
 @media all and (max-width: 616px) {
   .popup__container {
     padding: 25px 22px;
-    max-width: 282px;
+    width: 282px;
   }
 }
