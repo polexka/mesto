@@ -1,7 +1,6 @@
 .profile__info-wrap {
   margin: 22px 0 0;
   display: flex;
-  flex-direction: row;
   align-items: center;
 }
 

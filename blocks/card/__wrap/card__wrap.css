@@ -1,6 +1,11 @@
 .card__wrap {
   display: flex;
-  flex-direction: row;
   align-items: baseline;
   justify-content: space-between;
+}
+
+@media all and (max-width: 616px) {
+  .card__wrap {
+    align-items: center;
+  }
 }
