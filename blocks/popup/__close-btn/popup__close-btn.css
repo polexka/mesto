@@ -8,8 +8,8 @@
   background-position: center;
   border: none;
   position: absolute;
-  top: calc(-8px - 32px);
-  right: calc(-8px - 32px);
+  top: -40px;
+  right: -40px;
   transition: opacity 0.5s;
   cursor: pointer;
 }
@@ -22,7 +22,7 @@
   .popup__close-btn {
     width: 20px;
     height: 20px;
-    top: calc(-16px - 20px);
+    top: -36px;
     right: 0;
   }
 }
