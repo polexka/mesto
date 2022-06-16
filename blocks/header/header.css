@@ -1,17 +1,13 @@
 .header {
   margin: 0 auto;
   max-width: 880px;
-  border-bottom: 1px solid #545454;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.33);
 }
 
 @media all and (max-width: 914px) {
   .header {
     max-width: 581px;
+    width: 100%;
   }
 }
 
-@media all and (max-width: 616px) {
-  .header {
-    max-width: 282px;
-  }
-}

@@ -1,4 +1,5 @@
 .input__text {
+  margin-bottom: 30px;
   padding: 0 0 9px;
   max-width: 358px;
   color: black;
@@ -8,9 +9,6 @@
   border-radius: 1px;
   font-size: 14px;
   line-height: 17px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .input__text:focus {

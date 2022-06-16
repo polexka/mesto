@@ -1,16 +1,17 @@
-.reaction {
+.card__reaction {
   padding: 0;
-  margin-right: 15px;
+  margin-right: 20px;
   display: block;
   width: 22px;
   height: 19px;
   border: none;
   background-color: rgba(0, 0, 0, 0);
-  background-image: url(../../images/heartIcon.svg);
+  background-image: url(../../../images/heartIcon.svg);
   background-size: contain;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
-.reaction:hover {
+.card__reaction:hover {
   opacity: 0.5;
 }

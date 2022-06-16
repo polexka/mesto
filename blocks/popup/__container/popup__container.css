@@ -4,7 +4,6 @@
   max-width: 430px;
   box-sizing: border-box;
   position: relative;
-  top: calc(50% - 165px);
   display: flex;
   flex-direction: column;
   color: black;
@@ -16,6 +15,5 @@
   .popup__container {
     padding: 25px 22px;
     max-width: 282px;
-    top: calc(50% - 161px);
   }
 }

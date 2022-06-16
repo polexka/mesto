@@ -6,11 +6,12 @@
   background-size: contain;
   background-color: rgba(0, 0, 0, 0);
   border: none;
+  cursor: pointer;
   transition: opacity 0.5s;
 }
 
 .profile__edit-btn:hover {
-  opacity: 0.5;
+  opacity: 0.8;
 }
 
 @media all and (max-width: 616px) {

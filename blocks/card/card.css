@@ -1,7 +1,5 @@
 .card {
-  max-width: 282px;
-  max-height: 361px;
-  box-sizing: border-box;
+  max-width: 100%;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
