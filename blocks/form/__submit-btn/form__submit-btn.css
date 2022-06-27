@@ -1,4 +1,4 @@
-.input__submit-btn {
+.form__submit-btn {
   margin-top: 15px;
   padding: 15px 125px;
   max-width: 358px;
@@ -15,12 +15,12 @@
   transition: opacity 0.5s;
 }
 
-.input__submit-btn:hover {
+.form__submit-btn:hover {
   opacity: 0.8;
 }
 
 @media all and (max-width: 616px) {
-  .input__submit-btn {
+  .form__submit-btn {
     padding: 14px 82px;
     max-width: 238px;
     height: 46px;

@@ -29,67 +29,58 @@
     </section>
     <section class="gallery">
       <ul class="cards">
-        <li class="card">
-          <img class="card__image" src="./images/1.jpg" alt="Медуза">
-          <div class="card__wrap">
-            <h2 class="card__title">Медуза</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/2.jpg" alt="Рыбы">
-          <div class="card__wrap">
-            <h2 class="card__title">Рыбы</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/3.jpg" alt="Пожар">
-          <div class="card__wrap">
-            <h2 class="card__title">Медуза</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/4.jpg" alt="Гортензия">
-          <div class="card__wrap">
-            <h2 class="card__title">Гортензия</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/5.jpg" alt="Закат">
-          <div class="card__wrap">
-            <h2 class="card__title">Закат</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img class="card__image" src="./images/6.jpg" alt="Полет">
-          <div class="card__wrap">
-            <h2 class="card__title">Полет</h2>
-            <button class="card__reaction" type="button" aria-label="Нравится"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_profile-edit">
     <div class="popup__container">
-      <button class="popup__close-btn" type="button" aria-label="Прекратить редактирование"></button>
+      <button class="popup__close-btn popup__close-btn_profile-edit" type="button" aria-label="Прекратить редактирование"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="input" name="profile-edit">
-        <input type="text" name="name" placeholder="Заголовок" class="input__text input__text_type_title" required>
-        <input type="text" name="caption" placeholder="Описание" class="input__text input__text_type_caption" required>
-        <button class="input__submit-btn" type="submit" aria-label="Сохранить изменения">
+      <form class="form form_profile-edit" name="profile-edit">
+        <input type="text" name="name" placeholder="Заголовок" class="form__text form__text_type_title" required>
+        <input type="text" name="caption" placeholder="Описание" class="form__text form__text_type_caption" required>
+        <button class="form__submit-btn" type="submit" aria-label="Сохранить изменения">
           Сохранить
         </button>
       </form>
     </div>
   </div>
+  <div class="popup popup_card-add">
+    <div class="popup__container">
+      <button class="popup__close-btn popup__close-btn_cards-add" type="button" aria-label="Прекратить загрузку карточки"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="form form_card-add" name="cards-add">
+        <input type="text" name="name" placeholder="Название" class="form__text form__text_type_card-title" required>
+        <input type="text" name="link" placeholder="Ссылка на картинку" class="form__text form__text_type_card-link" required>
+        <button class="form__submit-btn" type="submit" aria-label="Сохранить изменения">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_image">
+    <div class="image-view">
+      <button class="popup__close-btn popup__close-btn_image-view" type="button" aria-label="Закрыть"></button>
+      <img class="image-view__pic" src="" alt="Просмотр фото">
+      <h2 class="image-view__title">Описание картинки</h2>
+    </div>
+  </div>
+
+  <template class="card-template">
+    <li class="card">
+      <button class="card__delete" type="button" aria-label="Удалить"></button>
+      <img class="card__image" src="" alt="Описание картинки">
+      <div class="card__wrap">
+        <h2 class="card__title">Полет</h2>
+        <button class="card__reaction" type="button" aria-label="Нравится"></button>
+      </div>
+    </li>
+  </template>
   <script src="./script/script.js"></script>
 </body>
 </html>

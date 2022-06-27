@@ -1,4 +1,4 @@
-.input__text {
+.form__text {
   margin-bottom: 30px;
   padding: 0 0 9px;
   max-width: 358px;
@@ -11,12 +11,12 @@
   line-height: 17px;
 }
 
-.input__text:focus {
+.form__text:focus {
   outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 @media all and (max-width: 616px) {
-  .input__text {
+  .form__text {
     max-width: 238px;
   }
 }
