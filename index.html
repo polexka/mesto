@@ -20,17 +20,15 @@
         <div class="profile__info">
           <div class="profile__info-wrap">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-btn" type="button" aria-label="Редактировать профиль"></button>
+            <button class="profile__edit" type="button" aria-label="Редактировать профиль"></button>
           </div>
           <p class="profile__caption">Исследователь океана</p>
         </div>
       </div>
-      <button class="profile__add-btn" type="button" aria-label="Добавить фотографии"></button>
+      <button class="profile__add" type="button" aria-label="Добавить фотографии"></button>
     </section>
     <section class="gallery">
-      <ul class="cards">
-
-      </ul>
+      <ul class="cards"></ul>
     </section>
   </main>
   <footer class="footer">
@@ -38,12 +36,18 @@
   </footer>
   <div class="popup popup_profile-edit">
     <div class="popup__container">
-      <button class="popup__close-btn popup__close-btn_profile-edit" type="button" aria-label="Прекратить редактирование"></button>
+      <button class="popup__close" type="button" aria-label="Прекратить редактирование"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="form form_profile-edit" name="profile-edit">
-        <input type="text" name="name" placeholder="Заголовок" class="form__text form__text_type_title" required>
-        <input type="text" name="caption" placeholder="Описание" class="form__text form__text_type_caption" required>
-        <button class="form__submit-btn" type="submit" aria-label="Сохранить изменения">
+      <form class="form" name="profile" novalidate>
+        <label class="form__field">
+          <input type="text" name="name" id="title-input" placeholder="Имя профиля" class="form__input" required minlength="2" maxlength="40">
+          <span class="title-input-error form__input-error"></span>
+        </label>
+        <label class="form__field">
+          <input type="text" name="caption" id="caption-input" placeholder="Описание" class="form__input" required minlength="2" maxlength="200">
+          <span class="caption-input-error form__input-error"></span>
+        </label>
+        <button class="form__submit" name="save" type="submit" aria-label="Сохранить изменения">
           Сохранить
         </button>
       </form>
@@ -51,26 +55,30 @@
   </div>
   <div class="popup popup_card-add">
     <div class="popup__container">
-      <button class="popup__close-btn popup__close-btn_cards-add" type="button" aria-label="Прекратить загрузку карточки"></button>
+      <button class="popup__close" type="button" aria-label="Прекратить загрузку карточки"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form class="form form_card-add" name="cards-add">
-        <input type="text" name="name" placeholder="Название" class="form__text form__text_type_card-title" required>
-        <input type="text" name="link" placeholder="Ссылка на картинку" class="form__text form__text_type_card-link" required>
-        <button class="form__submit-btn" type="submit" aria-label="Сохранить изменения">
-          Сохранить
+      <form class="form" name="upload" novalidate>
+        <label class="form__field">
+          <input type="text" name="location" id="card-title-input" placeholder="Название" class="form__input" required minlength="2" maxlength="30">
+          <span class="card-title-input-error form__input-error"></span>
+        </label>
+        <label class="form__field">
+          <input type="url" name="link" id="card-link-input" placeholder="Ссылка на картинку" class="form__input" required>
+          <span class="card-link-input-error form__input-error"></span>
+        </label>
+        <button class="form__submit" name="load" type="submit" aria-label="Сохранить изменения">
+          Создать
         </button>
       </form>
     </div>
   </div>
-
   <div class="popup popup_image">
     <div class="image-view">
-      <button class="popup__close-btn popup__close-btn_image-view" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
       <img class="image-view__pic" src="./img.png" alt="Просмотр фото">
       <h2 class="image-view__title">Описание картинки</h2>
     </div>
   </div>
-
   <template class="card-template">
     <li class="card">
       <button class="card__delete" type="button" aria-label="Удалить"></button>
@@ -81,6 +89,8 @@
       </div>
     </li>
   </template>
+  <script src="./script/cards.js"></script>
+  <script src="./script/validate.js"></script>
   <script src="./script/script.js"></script>
 </body>
 </html>
