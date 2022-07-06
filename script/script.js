@@ -34,13 +34,21 @@ const previewTitle = document.querySelector('.image-view__title');
 
 const template = document.querySelector('.card-template').content;
 
-function openPopup(popup, config) {
+function openPopup(popup) {
   popup.classList.add ('popup_opened');
-  clearPopup(popup, config);
+  document.addEventListener('keydown', closeByEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove ('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
+}
+
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
 function clearPopup(popup, config) {
@@ -69,7 +77,6 @@ function createCard(card) {
     previewImg.src = card.link;
     previewImg.alt = card.name;
     previewTitle.textContent = card.name;
-
     openPopup(cardImgPopup);
   });
 
@@ -82,15 +89,9 @@ function renderCard(card) {
 
 function closePopups() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
-
   popupList.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close')) {
-        closePopup(popup);
-      }
-    })
-    popup.addEventListener('keydown', (evt) => {
-      if (evt.code === 'Escape') {
         closePopup(popup);
       }
     })
@@ -99,26 +100,21 @@ function closePopups() {
 
 function submitCard(evt) {
   evt.preventDefault();
-  const formValidity = cardAddInputs.every(({validity}) => validity.valid);
-  if (formValidity) {
-    const card = { name: cardName.value, link: cardLink.value };
-    renderCard(card);
-    closePopup(cardAddPopup);
-  }
+  const card = { name: cardName.value, link: cardLink.value };
+  renderCard(card);
+  closePopup(cardAddPopup);
 }
 
 function submitEdits(evt) {
   evt.preventDefault();
-  const formValidity = profileEditInputs.every(({validity}) => validity.valid);
-  if (formValidity) {
-    profileName.textContent = inputName.value;
-    profileCaption.textContent = inputCaption.value;
-    closePopup(profilePopup);
-  }
+  profileName.textContent = inputName.value;
+  profileCaption.textContent = inputCaption.value;
+  closePopup(profilePopup);
 }
 
 function openEdits() {
   openPopup(profilePopup, config);
+  clearPopup(profilePopup, config);
   inputName.value = profileName.textContent;
   inputCaption.value = profileCaption.textContent;
   enableButton(profileEditForm.save, config.disabledButtonClass);
@@ -126,6 +122,7 @@ function openEdits() {
 
 function openUpload() {
   openPopup(cardAddPopup, config);
+  clearPopup(cardAddPopup, config);
   disableButton(cardAddForm.load, config.disabledButtonClass);
 }
 
