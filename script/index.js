@@ -54,32 +54,6 @@ function closeByEscape(evt) {
   }
 }
 
-function enableButton(buttonElement, disabledButtonClass) {
-  buttonElement.classList.remove(disabledButtonClass);
-  buttonElement.disabled = false;
-}
-
-function disableButton(buttonElement, disabledButtonClass) {
-  buttonElement.classList.add(disabledButtonClass);
-  buttonElement.disabled = true;
-}
-
-function cleanInput(formElement, config) {
-  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-  inputList.forEach((inputElement) => {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(config.inputErrorClass);
-    errorElement.textContent = '';
-    errorElement.classList.remove(config.errorClass);
-  })
-}
-
-function clearPopup(popup, config) {
-  const formElement = popup.querySelector(config.formSelector);
-  formElement.reset();
-  cleanInput(formElement, config);
-}
-
 function handleImgClick(title, link) {
   previewImg.src = link;
   previewImg.alt = title;
@@ -87,10 +61,13 @@ function handleImgClick(title, link) {
   openPopup(cardImgPopup);
 }
 
-function renderCard(card) {
+function createCard(card) {
   const element = new Card(card, handleImgClick, '.card-template');
-  const cardElement = element.generateCard();
-  cardsContainer.prepend(cardElement);
+  return element.generateCard();
+}
+
+function renderCard(card) {
+  cardsContainer.prepend(createCard(card));
 }
 
 function closePopups() {
@@ -118,18 +95,24 @@ function submitEdits(evt) {
   closePopup(profilePopup);
 }
 
+const validateEdits = new FormValidator(config, profileEditForm);
+validateEdits.enableValidation();
+
 function openEdits() {
   openPopup(profilePopup, config);
-  clearPopup(profilePopup, config);
+  validateEdits.cleanInputs();
   inputName.value = profileName.textContent;
   inputCaption.value = profileCaption.textContent;
-  enableButton(profileEditForm.save, config.disabledButtonClass);
+  validateEdits.enableButton();
 }
+
+const validateUpload = new FormValidator(config, cardAddForm);
+validateUpload.enableValidation();
 
 function openUpload() {
   openPopup(cardAddPopup, config);
-  clearPopup(cardAddPopup, config);
-  disableButton(cardAddForm.load, config.disabledButtonClass);
+  validateUpload.cleanInputs();
+  validateUpload.disableButton();
 }
 
 profileEditButton.addEventListener('click', openEdits);
@@ -143,9 +126,3 @@ cardAddForm.addEventListener('submit', submitCard);
 initialCards.forEach(renderCard);
 
 closePopups();
-
-const FormList = Array.from(document.querySelectorAll(config.formSelector));
-FormList.forEach((FormElement) => {
-  const form = new FormValidator(config, FormElement);
-  form.enableValidation();
-})
