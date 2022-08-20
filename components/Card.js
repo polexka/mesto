@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
   constructor(data, handleImgClick, templateSelector) {
     this._name = data.name;
     this._link = data.link;
@@ -26,7 +26,10 @@ class Card {
     });
 
     this._image.addEventListener('click', () => {
-      this._handleImgClick(this._name, this._link);
+      this._handleImgClick({
+        title: this._name,
+        link: this._link
+      });
     });
   }
 
@@ -36,12 +39,10 @@ class Card {
     this._setEventListeners();
 
     this._image.src = this._link;
-    this._image.alt = this._name;
+    this._image.alt = 'Изображение: ' + this._name;
     this._element.querySelector('.card__title').textContent = this._name;
 
     return this._element;
   }
 
 }
-
-export {Card};
