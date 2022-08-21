@@ -4,6 +4,8 @@ export default class Card {
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleImgClick = handleImgClick;
+    this._deleteCallback = this._deleteCallback.bind(this);
+    this._imageClickCallback = this._imageClickCallback.bind(this);
   }
 
   _getTemplate() {
@@ -16,21 +18,28 @@ export default class Card {
     return cardElement;
   }
 
+  _reactionCallback(evt) {
+    evt.target.classList.toggle('card__reaction_active');
+  }
+
+  _deleteCallback() {
+    this._element.remove();
+    this._element = null;
+  }
+
+  _imageClickCallback() {
+    this._handleImgClick({
+      title: this._name,
+      link: this._link
+    });
+  }
+
   _setEventListeners() {
-    this._element.querySelector('.card__reaction').addEventListener('click', (evt) => {
-      evt.target.classList.toggle('card__reaction_active');
-    });
+    this._element.querySelector('.card__reaction').addEventListener('click',this._reactionCallback);
 
-    this._element.querySelector('.card__delete').addEventListener('click', (evt) => {
-      this._element.remove();
-    });
+    this._element.querySelector('.card__delete').addEventListener('click', this._deleteCallback);
 
-    this._image.addEventListener('click', () => {
-      this._handleImgClick({
-        title: this._name,
-        link: this._link
-      });
-    });
+    this._image.addEventListener('click', this._imageClickCallback);
   }
 
   generateCard() {

@@ -8,6 +8,7 @@ const config = {
 }
 
 const profileEditButton = document.querySelector('.profile__edit');
+const cardTemplateSelector = '.card-template';
 const profilePopupSelector = '.popup_profile-edit';
 const profileNameSelector = '.profile__name';
 const profileCaptionSelector = '.profile__caption';
@@ -25,5 +26,6 @@ export {
   profilePopupSelector,
   cardUploadSelector,
   profileNameSelector,
-  profileCaptionSelector
+  profileCaptionSelector,
+  cardTemplateSelector
 }

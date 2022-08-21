@@ -17,7 +17,8 @@ import {
   profilePopupSelector,
   cardUploadSelector,
   profileNameSelector,
-  profileCaptionSelector
+  profileCaptionSelector,
+  cardTemplateSelector
 } from '../utils/constants.js'
 
 const userInfo = new UserInfo({
@@ -46,20 +47,23 @@ const handleImgClick = ({title, link}) => {
   imagePopup.open({title, link});
 }
 
+const createCard = (item) => {
+  const card = new Card(
+    item,
+    handleImgClick,
+    cardTemplateSelector
+  )
+  return card.generateCard();
+}
+
+const cardListRenderer = (item) => { cardList.addItem(createCard(item)) }
+
 const cardList = new Section (
-  {data: initialCards,
-  renderer: (item) => {
-    const card = new Card(
-      item,
-      handleImgClick,
-      '.card-template'
-    );
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
-  }}, cardsContainerSelector
+  cardListRenderer,
+  cardsContainerSelector
 );
 
-cardList.renderItems();
+cardList.renderItems(initialCards);
 
 function profileSubmitCallback({name, caption}) {
   userInfo.setUserInfo({
@@ -71,7 +75,8 @@ function profileSubmitCallback({name, caption}) {
 const profilePopup = new PopupWithForm( profilePopupSelector, profileSubmitCallback );
 profilePopup.setEventListeners();
 profileEditButton.addEventListener('click', () => {
-  profilePopup.open(userInfo.getUserInfo());
+  profilePopup.open();
+  profilePopup.setInputValues(userInfo.getUserInfo());
   formValidators.profile.resetValidation();
   formValidators.profile.disableButton();
 });
@@ -81,13 +86,13 @@ function cardUploadCallback ({location, link}) {
     name: location,
     link: link
   };
-  initialCards.push(card);
-  cardList.renderItems();
+  cardList.addItem(createCard(card));
 }
 
 const uploadPopup = new PopupWithForm( cardUploadSelector, cardUploadCallback);
 uploadPopup.setEventListeners();
 cardsAddButton.addEventListener('click', () => {
+  formValidators.upload.disableButton();
   uploadPopup.open();
   formValidators.upload.resetValidation();
 });
