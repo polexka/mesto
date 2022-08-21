@@ -86,7 +86,7 @@ function cardUploadCallback ({location, link}) {
     name: location,
     link: link
   };
-  cardList.addItem(createCard(card));
+  cardListRenderer(card);
 }
 
 const uploadPopup = new PopupWithForm( cardUploadSelector, cardUploadCallback);
