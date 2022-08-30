@@ -8,14 +8,19 @@ const config = {
 }
 
 const profileEditButton = document.querySelector('.profile__edit');
+const cardsAddButton = document.querySelector('.profile__add');
+const avatarLoadButton = document.querySelector('.profile__image-wrap');
+
 const cardTemplateSelector = '.card-template';
 const profilePopupSelector = '.popup_profile-edit';
 const profileNameSelector = '.profile__name';
 const profileCaptionSelector = '.profile__caption';
 const cardsContainerSelector = '.cards';
-const cardsAddButton = document.querySelector('.profile__add');
 const cardUploadSelector = '.popup_card-add';
 const imagePopupSelector = '.popup_image';
+const avatarSelector = '.profile__image';
+const deleteSelector = '.popup_delete';
+const avatarLoadSelector = '.popup_avatar';
 
 export {
   config,
@@ -27,5 +32,9 @@ export {
   cardUploadSelector,
   profileNameSelector,
   profileCaptionSelector,
-  cardTemplateSelector
+  cardTemplateSelector,
+  avatarSelector,
+  deleteSelector,
+  avatarLoadSelector,
+  avatarLoadButton
 }

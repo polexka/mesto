@@ -1,10 +1,17 @@
 export default class Card {
-  constructor(data, handleImgClick, templateSelector) {
+  constructor(data, handleImgClick, templateSelector, deleteCallback, reactionCallback, userId) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
+    this._likesCount = (data.likes) ? data.likes.length : 0;
+    this._isLiked = (data.likes) ? data.likes.some((element) => element._id == userId) : false;
+    this._access = (data.owner._id == userId) ? true : false;
     this._templateSelector = templateSelector;
     this._handleImgClick = handleImgClick;
-    this._deleteCallback = this._deleteCallback.bind(this);
+    this._reactionCallback = reactionCallback;
+    this._reaction = this._reaction.bind(this);
+    this._deleteCallback = deleteCallback;
+    this._delete = this._delete.bind(this);
     this._imageClickCallback = this._imageClickCallback.bind(this);
   }
 
@@ -18,13 +25,18 @@ export default class Card {
     return cardElement;
   }
 
-  _reactionCallback(evt) {
+  _reaction(evt) {
     evt.target.classList.toggle('card__reaction_active');
+    if (evt.target.classList.contains('card__reaction_active')) {
+      this._likes.textContent = parseInt(this._likes.textContent, 10) + 1;
+    } else {
+      this._likes.textContent = parseInt(this._likes.textContent, 10) - 1;
+    }
+    this._reactionCallback(this._id, evt.target.classList.contains('card__reaction_active'));
   }
 
-  _deleteCallback() {
-    this._element.remove();
-    this._element = null;
+  _delete() {
+    this._deleteCallback(this._element, this._id);
   }
 
   _imageClickCallback() {
@@ -35,16 +47,25 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._element.querySelector('.card__reaction').addEventListener('click',this._reactionCallback);
+    this._element.querySelector('.card__reaction').addEventListener('click',this._reaction);
 
-    this._element.querySelector('.card__delete').addEventListener('click', this._deleteCallback);
+    if (this._access) {
+      this._element.querySelector('.card__delete').addEventListener('click', this._delete);
+    } else {
+      this._element.querySelector('.card__delete').remove();
+    }
 
     this._image.addEventListener('click', this._imageClickCallback);
   }
 
   generateCard() {
     this._element = this._getTemplate();
+    this._likes = this._element.querySelector('.card__reaction-count');
+    this._likes.textContent = this._likesCount;
     this._image =  this._element.querySelector('.card__image');
+    if (this._isLiked) {
+      this._element.querySelector('.card__reaction').classList.add('card__reaction_active')
+    }
     this._setEventListeners();
 
     this._image.src = this._link;

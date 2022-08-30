@@ -1,7 +1,5 @@
 .card__wrap {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
 }
 
 @media all and (max-width: 616px) {

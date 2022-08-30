@@ -1,10 +1,10 @@
 export default class UserInfo {
-  constructor({usernameSelector, profileSelector}) {
+  constructor({usernameSelector, profileSelector, avatarSelector}) {
     this._username = document.querySelector(usernameSelector);
     this._profile = document.querySelector(profileSelector);
+    this._avatar = document.querySelector(avatarSelector);
   }
 
-  // возвращает нам {name, caption}, которые нужно подставить в profilePopup при открытии
   getUserInfo() {
     return {
       name: `${this._username.textContent}`,
@@ -15,5 +15,17 @@ export default class UserInfo {
   setUserInfo({username, caption}) {
     this._username.textContent = username;
     this._profile.textContent = caption;
+  }
+
+  setAvatar(avatar) {
+    this._avatar.src = avatar;
+  }
+
+  setId(id) {
+    this._id = id;
+  }
+
+  getId() {
+    return this._id;
   }
 }

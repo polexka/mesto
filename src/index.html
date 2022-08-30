@@ -15,13 +15,16 @@
   <main class="content">
     <section class="profile">
       <div class="profile__wrap">
-        <img class="profile__image" src="<%=require('./images/avatar.jpg')%>" alt="Изображение профиля">
+        <div class="profile__image-wrap">
+          <div class="profile__image-view"></div>
+          <img class="profile__image" src="<%=require('./images/avatar.jpg')%>" alt="Изображение профиля">
+        </div>
         <div class="profile__info">
           <div class="profile__info-wrap">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name"></h1>
             <button class="profile__edit" type="button" aria-label="Редактировать профиль"></button>
           </div>
-          <p class="profile__caption">Исследователь океана</p>
+          <p class="profile__caption"></p>
         </div>
       </div>
       <button class="profile__add" type="button" aria-label="Добавить фотографии"></button>
@@ -71,6 +74,23 @@
       </form>
     </div>
   </div>
+
+  <div class="popup popup_avatar">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Прекратить загрузку аватара"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="form" name="avatar" novalidate>
+        <label class="form__field">
+          <input type="url" name="avatar" id="avatar-input" placeholder="Ссылка на картинку" class="form__input" required>
+          <span class="avatar-input-error form__input-error"></span>
+        </label>
+        <button class="form__submit" name="update" type="submit" aria-label="Сохранить изменения">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+
   <div class="popup popup_image">
     <div class="image-view">
       <button class="popup__close" type="button" aria-label="Закрыть"></button>
@@ -78,13 +98,25 @@
       <h2 class="image-view__title">Описание картинки</h2>
     </div>
   </div>
+  <div class="popup popup_delete">
+    <div class="popup__container">
+      <button class="popup__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button class="form__submit confirm" type="button" aria-label="Подтвердить удаление">
+          Да
+      </button>
+    </div>
+  </div>
   <template class="card-template">
     <li class="card">
       <button class="card__delete" type="button" aria-label="Удалить"></button>
       <img class="card__image" src="./img.png" alt="Описание картинки">
       <div class="card__wrap">
-        <h2 class="card__title">Полет</h2>
-        <button class="card__reaction" type="button" aria-label="Нравится"></button>
+        <h2 class="card__title"></h2>
+        <div class="card__reaction-wrap">
+          <button class="card__reaction" type="button" aria-label="Нравится"></button>
+          <span class="card__reaction-count"></span>
+        </div>
       </div>
     </li>
   </template>
