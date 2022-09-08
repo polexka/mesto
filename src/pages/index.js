@@ -1,5 +1,6 @@
 import './index.css';
 
+import Api from '../components/Api';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -22,8 +23,20 @@ import {
   avatarSelector,
   deleteSelector,
   avatarLoadSelector,
-  avatarLoadButton
+  avatarLoadButton,
+  token,
+  baseUrl
 } from '../utils/constants.js';
+
+const formValidators = {};
+
+const api = new Api({
+  baseUrl: baseUrl,
+  headers: {
+    authorization: token,
+    'Content-Type': 'application/json'
+  }
+});
 
 const userInfo = new UserInfo({
   usernameSelector: profileNameSelector,
@@ -31,72 +44,46 @@ const userInfo = new UserInfo({
   avatarSelector: avatarSelector
 });
 
-fetch('https://mesto.nomoreparties.co/v1/cohort-48/users/me', {
-  method: 'GET',
-  headers: {
-    authorization: '3148a268-7143-49db-8834-70af504db3e1'
-  }
-})
-.then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка авторизации: ${res.status}`);
-})
-.then((result) => {
-  userInfo.setUserInfo({
-    username: result.name,
-    caption: result.about
-  });
-  userInfo.setAvatar(result.avatar);
-  userInfo.setId(result._id);
-})
-.catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
-
-const formValidators = {};
-
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(config, formElement);
-    const formName = formElement.getAttribute('name');
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  })
+function setUser(info) {
+  userInfo.setUserInfo(info);
+  userInfo.setAvatar(info);
+  userInfo.setId(info);
 }
 
-enableValidation(config);
-
-function avatarSubmitCallback({avatar}) {
-  console.log(avatar);
-  fetch('https://mesto.nomoreparties.co/v1/cohort-48/users/me/avatar', {
-    method: 'PATCH',
-    headers: {
-      authorization: '3148a268-7143-49db-8834-70af504db3e1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      avatar: avatar
-    })
-  })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка установки аватара: ${res.status}`);
-  })
-  .then((res) => {
-    userInfo.setAvatar(res.avatar);
-    console.log(res);
+function showCards() {
+  api.getInitialCards()
+  .then((result) => {
+    cardList.renderItems(result.reverse());
   })
   .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
+    console.log(`Ошибка получения массива карточек: ${err}`);
+  })
 }
 
-const avatarPopup = new PopupWithForm (avatarLoadSelector, avatarSubmitCallback);
+api.getUserInfo()
+  .then((result) => {
+    setUser(result);
+    showCards();
+  })
+  .catch((err) => {
+    console.log(`Ошибка авторизации: ${err}`);
+  });
+
+function avatarSubmitCallback({ avatar }) {
+  avatarPopup.renderLoading(true);
+  api.updateAvatar(avatar)
+    .then((res) => {
+      userInfo.setAvatar(res);
+    })
+    .catch((err) => {
+      console.log(`Ошибка установки аватара: ${err}`);
+    })
+    .finally(() => {
+      avatarPopup.renderLoading(false);
+    })
+}
+
+const avatarPopup = new PopupWithForm(avatarLoadSelector, avatarSubmitCallback);
 avatarPopup.setEventListeners();
 avatarLoadButton.addEventListener('click', () => {
   formValidators.upload.disableButton();
@@ -104,26 +91,25 @@ avatarLoadButton.addEventListener('click', () => {
   formValidators.upload.resetValidation();
 })
 
-const imagePopup = new PopupWithImage (imagePopupSelector);
+const imagePopup = new PopupWithImage(imagePopupSelector);
 imagePopup.setEventListeners();
 
 function confirmCallback(element, id) {
-  element.remove();
-  element = null;
-
-  fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: '3148a268-7143-49db-8834-70af504db3e1'
-    }
-  })
+  api.deleteCard(id)
+    .then(() => {
+      element.remove();
+      element = null;
+    })
+    .catch((err) => {
+      console.log(`Ошибка удаления карточки: ${err}`);
+    });
 }
 
 const deletePopup = new PopupWithConfirmation(deleteSelector, confirmCallback);
 deletePopup.setEventListeners();
 
-const handleImgClick = ({title, link}) => {
-  imagePopup.open({title, link});
+const handleImgClick = (data) => {
+  imagePopup.open(data);
 }
 
 function deleteCallback(element, id) {
@@ -131,39 +117,16 @@ function deleteCallback(element, id) {
 }
 
 function reactionCallback(id, isLiked) {
-  console.log('reactionCallback worked')
   if (!isLiked) {
-    fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${id}/likes`, {
-      method: 'DELETE',
-      headers: {
-        authorization: '3148a268-7143-49db-8834-70af504db3e1'
-      }
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка убирания лайка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    });
+    api.deleteLike(id)
+      .catch((err) => {
+        console.log(`Ошибка удаления лайка: ${err}`);
+      });
   } else {
-    fetch(`https://mesto.nomoreparties.co/v1/cohort-48/cards/${id}/likes`, {
-      method: 'PUT',
-      headers: {
-        authorization: '3148a268-7143-49db-8834-70af504db3e1'
-      }
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка установки лайка: ${res.status}`);
-    })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    });
+    api.putLike(id)
+      .catch((err) => {
+        console.log(`Ошибка установки лайка: ${err}`);
+      });
   }
 }
 
@@ -183,55 +146,26 @@ const cardListRenderer = (item) => {
   cardList.addItem(createCard(item))
 }
 
-const cardList = new Section (
+const cardList = new Section(
   cardListRenderer,
   cardsContainerSelector
 );
 
-fetch('https://mesto.nomoreparties.co/v1/cohort-48/cards', {
-  method: 'GET',
-  headers: {
-    authorization: '3148a268-7143-49db-8834-70af504db3e1'
-  }
-})
-.then((res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка получения карточек: ${res.status}`);
-})
-.then((result) => {
-  cardList.renderItems(result.reverse());
-  console.log(result[1].owner._id);
-  console.log('user id ', userInfo.getId());
-})
-.catch((err) => {
-    console.log(err); // выведем ошибку в консоль
-  });
-
-function profileSubmitCallback({name, caption}) {
-  userInfo.setUserInfo({
-    username: name,
-    caption: caption
-  });
-
-  fetch('https://mesto.nomoreparties.co/v1/cohort-48/users/me', {
-    method: 'PATCH',
-    headers: {
-      authorization: '3148a268-7143-49db-8834-70af504db3e1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name,
-      about: caption
+function profileSubmitCallback(data) {
+  profilePopup.renderLoading(true);
+  api.updateUserInfo(data)
+    .then((res) => {
+      userInfo.setUserInfo(res);
     })
-  })
-  // .catch((err) => {
-  //   console.log(err); // выведем ошибку в консоль
-  // });
+    .catch((err) => {
+      console.log(`Ошибка обновления пользовательской информации: ${err}`);
+    })
+    .finally(() => {
+      profilePopup.renderLoading(false);
+    })
 }
 
-const profilePopup = new PopupWithForm( profilePopupSelector, profileSubmitCallback );
+const profilePopup = new PopupWithForm(profilePopupSelector, profileSubmitCallback);
 profilePopup.setEventListeners();
 profileEditButton.addEventListener('click', () => {
   profilePopup.open();
@@ -240,39 +174,36 @@ profileEditButton.addEventListener('click', () => {
   formValidators.profile.disableButton();
 });
 
-function cardUploadCallback ({location, link}) {
-  const card = {
-    name: location,
-    link: link,
-    owner: {
-      _id: userInfo.getId()
-    }
-  };
-  cardListRenderer(card);
-
-  fetch('https://mesto.nomoreparties.co/v1/cohort-48/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '3148a268-7143-49db-8834-70af504db3e1',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: location,
-      link: link,
-      owner: {
-        _id: userInfo.getId()
-      }
+function cardUploadCallback(data) {
+  uploadPopup.renderLoading(true);
+  api.uploadCard(data)
+    .then((res) => {
+      cardListRenderer(res);
     })
-  })
-  // .catch((err) => {
-  //   console.log(err); // выведем ошибку в консоль
-  // });
+    .catch((err) => {
+      console.log(`Ошибка добавления карточки: ${err}`);
+    })
+    .finally(() => {
+      uploadPopup.renderLoading(false);
+    })
 }
 
-const uploadPopup = new PopupWithForm( cardUploadSelector, cardUploadCallback);
+const uploadPopup = new PopupWithForm(cardUploadSelector, cardUploadCallback);
 uploadPopup.setEventListeners();
 cardsAddButton.addEventListener('click', () => {
   formValidators.upload.disableButton();
   uploadPopup.open();
   formValidators.upload.resetValidation();
 });
+
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  })
+};
+
+enableValidation(config);

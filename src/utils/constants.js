@@ -22,6 +22,9 @@ const avatarSelector = '.profile__image';
 const deleteSelector = '.popup_delete';
 const avatarLoadSelector = '.popup_avatar';
 
+const token = '05d68b83-9a45-474c-a0fb-d86bd6786213';
+const baseUrl = `https://mesto.nomoreparties.co/v1/cohort-50`;
+
 export {
   config,
   profileEditButton,
@@ -36,5 +39,7 @@ export {
   avatarSelector,
   deleteSelector,
   avatarLoadSelector,
-  avatarLoadButton
+  avatarLoadButton,
+  token,
+  baseUrl
 }
