@@ -23,6 +23,7 @@
 @import url(../blocks/form/__input-error/_active/form__input-error_active.css);
 @import url(../blocks/form/__submit/form__submit.css);
 @import url(../blocks/form/__submit/_disabled/form__submit_disabled.css);
+@import url(../blocks/form/_confirm/form_confirm.css);
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__wrap/profile__wrap.css);
