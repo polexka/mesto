@@ -50,30 +50,21 @@ function setUser(info) {
   userInfo.setId(info);
 }
 
-function showCards() {
-  api.getInitialCards()
-  .then((result) => {
-    cardList.renderItems(result.reverse());
-  })
-  .catch((err) => {
-    console.log(`Ошибка получения массива карточек: ${err}`);
-  })
-}
-
-api.getUserInfo()
-  .then((result) => {
-    setUser(result);
-    showCards();
-  })
-  .catch((err) => {
-    console.log(`Ошибка авторизации: ${err}`);
-  });
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+.then(([userData, cards]) => {
+  setUser(userData);
+  cardList.renderItems(cards.reverse())
+})
+.catch((err) => {
+  console.log(`Ошибка авторизации & получения массива карточек: ${err}`);
+});
 
 function avatarSubmitCallback({ avatar }) {
   avatarPopup.renderLoading(true);
   api.updateAvatar(avatar)
     .then((res) => {
       userInfo.setAvatar(res);
+      avatarPopup.close();
     })
     .catch((err) => {
       console.log(`Ошибка установки аватара: ${err}`);
@@ -99,6 +90,7 @@ function confirmCallback(element, id) {
     .then(() => {
       element.remove();
       element = null;
+      deletePopup.close();
     })
     .catch((err) => {
       console.log(`Ошибка удаления карточки: ${err}`);
@@ -116,14 +108,25 @@ function deleteCallback(element, id) {
   deletePopup.open(element, id);
 }
 
-function reactionCallback(id, isLiked) {
-  if (!isLiked) {
+function reactionResponseCallback(data, element, likeCounter) {
+  likeCounter.textContent = data.likes.length;
+  element.classList.toggle('card__reaction_active');
+}
+
+function reactionCallback(id, element, isLiked, likeCounter) {
+  if (isLiked) {
     api.deleteLike(id)
+    .then((res) => {
+      reactionResponseCallback(res, element, likeCounter);
+    })
       .catch((err) => {
         console.log(`Ошибка удаления лайка: ${err}`);
       });
   } else {
     api.putLike(id)
+    .then((res) => {
+      reactionResponseCallback(res, element, likeCounter);
+    })
       .catch((err) => {
         console.log(`Ошибка установки лайка: ${err}`);
       });
@@ -156,6 +159,7 @@ function profileSubmitCallback(data) {
   api.updateUserInfo(data)
     .then((res) => {
       userInfo.setUserInfo(res);
+      profilePopup.close();
     })
     .catch((err) => {
       console.log(`Ошибка обновления пользовательской информации: ${err}`);
@@ -179,6 +183,7 @@ function cardUploadCallback(data) {
   api.uploadCard(data)
     .then((res) => {
       cardListRenderer(res);
+      uploadPopup.close();
     })
     .catch((err) => {
       console.log(`Ошибка добавления карточки: ${err}`);

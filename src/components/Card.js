@@ -26,13 +26,7 @@ export default class Card {
   }
 
   _reaction(evt) {
-    evt.target.classList.toggle('card__reaction_active');
-    if (evt.target.classList.contains('card__reaction_active')) {
-      this._likes.textContent = parseInt(this._likes.textContent, 10) + 1;
-    } else {
-      this._likes.textContent = parseInt(this._likes.textContent, 10) - 1;
-    }
-    this._reactionCallback(this._id, evt.target.classList.contains('card__reaction_active'));
+    this._reactionCallback(this._id, evt.target, evt.target.classList.contains('card__reaction_active'), this._likes);
   }
 
   _delete() {

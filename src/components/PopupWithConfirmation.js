@@ -10,7 +10,6 @@ export default class PopupWithConfirmation extends Popup {
 
   _confirm() {
     this._confirmCallback(this._triggerElement, this._triggerId);
-    this.close();
   }
 
   open(element, id) {
