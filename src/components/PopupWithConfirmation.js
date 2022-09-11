@@ -8,19 +8,20 @@ export default class PopupWithConfirmation extends Popup {
     this._confirm = this._confirm.bind(this);
   }
 
-  _confirm(element, id) {
-    this._confirmCallback(element, id);
+  _confirm() {
+    this._confirmCallback(this._triggerElement, this._triggerId);
     this.close();
   }
 
   open(element, id) {
     super.open();
-    this._button.addEventListener('click', () => {
-      this._confirm(element, id);
-    });
+    this._triggerElement = element;
+    this._triggerId = id;
+    this._button.addEventListener('click', this._confirm);
   }
 
   close() {
     super.close();
+    this._button.removeEventListener('click', this._confirm);
   }
 }
